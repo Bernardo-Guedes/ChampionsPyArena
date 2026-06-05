@@ -227,6 +227,9 @@ def executar_jogo():
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 rodando = False
+            
+            if personagem1.vida <= 0 or personagem2.vida <= 0:
+                rodando = False
 
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_s:
