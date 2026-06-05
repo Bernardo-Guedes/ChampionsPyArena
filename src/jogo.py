@@ -63,12 +63,24 @@ class personagem(pygame.sprite.Sprite):
         self.rect = pygame.Rect(0, 0, 222, 180)
         self.rect.topleft = (rect_x, ALTURA_TELA-300)
         self.ataque = False
+        self.acertou_ataque = False
         self.correndo = False
         self.direcao = 1
+        self.vida_maxima = 100 #define a vida máxima do jogador
+        self.vida = self.vida_maxima #define a vida atual com a vida máxima (início do jogo)
+        self.dano = 5 # define o dano recebido a cada golpe adversário
 
     def atacar(self):
         self.ataque = True
+        self.acertou_ataque = False #define o ataque acertado primeiramente como False
         self.atual = 10
+    
+    # Define a função de receber dano
+    def receber_dano(self, dano):
+        self.vida -= dano
+
+        if self.vida < 0: # se a vida for menor que 0, ela vira 0 automaticamente.
+            self.vida = 0
 
     def update(self, inicio = 0):
         if self.ataque:
@@ -97,6 +109,58 @@ class personagem(pygame.sprite.Sprite):
         img_rect = imagem.get_rect(center=self.rect.center)
         surface.blit(imagem, img_rect)
 
+# Define uma funcão que desenha a barra de vida na tela
+def desenhar_barra_vida(tela, x, y, vida, vida_maxima):
+    largura_total = 300 #largura total da barra
+    altura = 30
+    porcentagem = vida / vida_maxima
+    largura_atual = largura_total * porcentagem # quando a vida é diminuida, a largura atual é diminuida de acordo com a vida restante
+
+    #barra vermelha
+    pygame.draw.rect(
+        tela,(255, 0, 0),(x, y, largura_total, altura)
+        )
+     
+    #barra verde da vida restante
+    pygame.draw.rect(
+        tela,(0, 255, 0), (x, y, largura_atual, altura)
+    )
+
+    #borda
+    pygame.draw.rect(
+        tela,(255, 255, 255),(x, y, largura_total, altura), 2
+    )
+
+# Função que detecta se o ataque acertou o oponente
+def verificar_ataque(atacante, defensor):
+
+    if not atacante.ataque: # Se o atacante não realiza o ataque a função não é realizada
+        return
+    
+    if int(atacante.atual) != 16: # Se o frame do ataque não é 16 (momento em que o movimento de ataque acerta o oponente) a função não é realizada
+        return
+
+    if atacante.direcao == 1: # Se o atacante estiver olhando para direita
+        hitbox_ataque = pygame.Rect( # Define a hitbox de ataque
+            atacante.rect.right, 
+            atacante.rect.y + 20, # A hitbox é posicionada a frente, para verificar se é o golpe que pega no adversário
+            50, # Largura
+            50 # Altura
+        )
+    else: # caso o atacante esteja olhando pra esquerda
+        hitbox_ataque = pygame.Rect( 
+            atacante.rect.left - 50,
+            atacante.rect.y + 20,
+            50,
+            50
+        )
+
+    # Se o programa detecta a colisão da hitbox com o adversário e o ataque acertado está False
+    if (hitbox_ataque.colliderect(defensor.rect) and not atacante.acertou_ataque):
+        defensor.receber_dano(atacante.dano) # Define o dano para o defensor
+        atacante.acertou_ataque = True # Define o ataque acertado como True
+
+
 def executar_jogo():
     """Executa o loop principal do jogo e controla estado, colisões e pontuação."""
     pygame.init()
@@ -106,6 +170,8 @@ def executar_jogo():
     todas_sprites = pygame.sprite.Group()
     personagem1 = personagem(100)
     personagem2 = personagem(300)
+    personagem1.direcao = 1
+    personagem2.direcao = -1
     todas_sprites.add(personagem1)
     todas_sprites.add(personagem2)
     pygame.display.set_caption(TITULO_JOGO)
@@ -148,6 +214,14 @@ def executar_jogo():
 
     # Loop principal: processa entrada, atualiza estado e renderiza a cena.
     while rodando:
+
+        # Enquanto o jogo estiver rodando verifica o ataque de ambos os personagens
+        verificar_ataque(personagem1, personagem2) 
+        verificar_ataque(personagem2, personagem1)
+
+        # Envia o conteúdo desenhado (barra de vida) para a tela visível
+        pygame.display.flip()
+
         relogio.tick(FPS)
 
         for evento in pygame.event.get():
@@ -181,6 +255,7 @@ def executar_jogo():
             personagem1.rect.x += velocidade
             personagem1.correndo = True
             personagem1.direcao = 1
+
 
         # Limitando o jogador dentro das bordas da tela usando as propriedades do Rect
         #jogador["rect"].x = limitar_valor(jogador["rect"].x, 0, LARGURA_TELA - jogador["rect"].width)
@@ -226,7 +301,12 @@ def executar_jogo():
             f"{TITULO_JOGO} | Pontos: {pontos} | Recorde: {recorde} | Vidas: {vidas}"
         )
 
+        # Limpa a tela a cada redesenho, fazendo com que a vida pareça diminuir suavimente
         tela.fill(CINZA)
+
+        # Desenha a barra de vida e vai atualizando enquanto o jogo roda
+        desenhar_barra_vida(tela, 90, 30, personagem1.vida, personagem1.vida_maxima)
+        desenhar_barra_vida(tela, 1000, 30, personagem2.vida, personagem2.vida_maxima)
 
         # Desenhando os elementos na tela passando a imagem e o rect de cada dicionário
         """
