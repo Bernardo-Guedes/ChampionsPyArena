@@ -1,16 +1,55 @@
-def calcular_pontos(pontos_atual, pontos_ganhos):
-    """Soma os pontos ganhos à pontuação atual."""
-    return pontos_atual + pontos_ganhos
+import pygame
+
+def desenhar_barra_vida(tela, x, y, vida, vida_maxima):
+    largura_total = 300
+    altura = 30
+    porcentagem = vida / vida_maxima
+    largura_atual = largura_total * porcentagem
+
+    pygame.draw.rect(
+        tela,
+        (255, 0, 0),
+        (x, y, largura_total, altura)
+    )
+    pygame.draw.rect(
+        tela,
+        (0, 255, 0),
+        (x, y, largura_atual, altura)
+    )
+    pygame.draw.rect(
+        tela,
+        (255, 255, 255),
+        (x, y, largura_total, altura),
+        2
+    )
 
 
-def tomar_dano(vida_atual, dano):
-    """Reduz a vida atual com base no dano recebido."""
-    return vida_atual - dano
+def verificar_ataque(atacante, defensor):
+    if not atacante.atacando: # Se o atacante não realiza o ataque a função não é realizada
+        return
+        
+    if int(atacante.frame) != 8:
+        return
 
+    if atacante.direcao == 1: # Se o atacante estiver olhando para direita
+        hitbox_ataque = pygame.Rect( # Define a hitbox de ataque
+            atacante.rect.right, 
+            atacante.rect.y + 20, # A hitbox é posicionada a frente, para verificar se é o golpe que pega no adversário
+            50, # Largura
+            50 # Altura
+        )
+    else: # caso o atacante esteja olhando pra esquerda
+        hitbox_ataque = pygame.Rect( 
+            atacante.rect.left - 50,
+            atacante.rect.y + 20,
+            50,
+            50
+        )
 
-def jogador_perdeu(vidas):
-    """Indica se o jogador ficou sem vidas."""
-    return vidas <= 0
+    # Se o programa detecta a colisão da hitbox com o adversário e o ataque acertado está False
+    if (hitbox_ataque.colliderect(defensor.rect) and not atacante.acertou_ataque):
+        defensor.receber_dano(atacante.dano) # Define o dano para o defensor
+        atacante.acertou_ataque = True # Define o ataque acertado como True
 
 
 def limitar_valor(valor, minimo, maximo):
