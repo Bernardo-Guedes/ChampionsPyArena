@@ -13,6 +13,7 @@ from src.sprites import ( carregar_animacao )
 class Personagem(pygame.sprite.Sprite):
     def __init__(self, rect_x):
         super().__init__()
+        self.som_ataque = pygame.mixer.Sound("assets/sons/ataque1.wav") #Necessário para que cada personagem guarde o som de ataque.
         self.animacoes = {
             "idle": carregar_animacao(CAMINHO_SPRITE_IDLE, FRAMES_IDLE),
             "attack": carregar_animacao(CAMINHO_SPRITE_ATTACK, FRAMES_ATTACK),
@@ -41,6 +42,8 @@ class Personagem(pygame.sprite.Sprite):
             self.atacando = True
             self.acertou_ataque = False
             self.frame = 0
+
+            self.som_ataque.play() #Som de ataque.
 
     def receber_dano(self, dano):
         self.vida -= dano

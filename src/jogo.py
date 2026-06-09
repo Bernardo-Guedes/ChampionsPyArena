@@ -27,6 +27,7 @@ def tela_inicio(tela):
 def executar_jogo():
     """Executa o loop principal do jogo e controla estado, colisões e pontuação."""
     pygame.init()
+    pygame.mixer.init() #Necessário para ligar o sistema de som durante o combate.
     tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     pygame.display.set_caption(TITULO_JOGO)
     if not tela_inicio(tela):
