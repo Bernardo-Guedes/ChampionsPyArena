@@ -40,9 +40,26 @@ def executar_jogo():
     relogio = pygame.time.Clock()
     rodando = True
     velocidade = 5
+    inico_luta = pygame.time.get_ticks() # Define o início do tempo de luta quando as animações são carregadas
+    tempo_luta = 20 # Define o tempo de luta em segundos
+    fonte = pygame.font.SysFont("Arial", 40, True) # Define o estilo da fonte do cronômetro
 
     # Loop principal: processa entrada, atualiza estado e renderiza a cena.
     while rodando:
+
+        tempo_atual = pygame.time.get_ticks() # Define o tempo atual o mesmo do início da luta
+        tempo_restante = tempo_luta - ((tempo_atual - inico_luta) / 1000) # Defino o tempo_restante como o tempo de luta menos o tempo percorrido
+        tempo_restante = max(0, tempo_restante) # Define o máximo do tempo restante (que só vai até 0)
+
+        """ Trecho de código que formata o tempo para minutos e segundos """
+        segundos = int(tempo_restante)
+        minutos = segundos // 60
+        segundos = segundos % 60
+        tempo_formatado = f"{minutos:02}:{segundos:02}"
+
+        """ Condição que define que se o tempo restante for menor ou igual a 0, o loop principal se encerra """
+        if tempo_restante <= 0:
+            rodando = False
             
         verificar_ataque(personagem1, personagem2) 
         verificar_ataque(personagem2, personagem1)
@@ -99,11 +116,28 @@ def executar_jogo():
 
         tela.fill(CINZA)
 
-        # Desenha a barra de vida e de ultimate e vai atualizando enquanto o jogo roda
+        """ Desenha a barra de vida e de ultimate e vai atualizando enquanto o jogo roda """
         desenhar_barra_vida(tela, 90, 30, personagem1.vida, personagem1.vida_maxima)
         desenhar_barra_vida(tela, 1000, 30, personagem2.vida, personagem2.vida_maxima)
         desenhar_barra_ultimate(tela, 90, 60, personagem1.ultimate, personagem1.ultimate_maximo)
         desenhar_barra_ultimate(tela, 1000, 60, personagem2.ultimate, personagem2.ultimate_maximo)
+
+        """ Renderiza o tempo formatado na tela """
+        if tempo_restante > 10:
+            texto = fonte.render(
+                tempo_formatado,
+                True,
+                (255, 255, 255)
+            )
+        else:
+            texto = fonte.render(
+                tempo_formatado,
+                True,
+                (255, 0, 0) # Define que a partir dos 10 segundos finais, a cor do tempo é alterada para vermelho
+            )
+
+        """ Coloca o tempo na tela do jogo """
+        tela.blit(texto, (630, 20))
 
         todas_sprites.update()
         for sprite in todas_sprites:
