@@ -23,6 +23,28 @@ def desenhar_barra_vida(tela, x, y, vida, vida_maxima):
         2
     )
 
+def desenhar_barra_ultimate(tela, x, y, ultimate, ultimate_maximo):
+    largura_total = 300
+    altura = 20
+    porcentagem = ultimate / ultimate_maximo
+    largura_atual = largura_total * porcentagem
+
+    pygame.draw.rect(
+        tela,
+        (50, 50, 50),
+        (x, y, largura_total, altura)
+    )
+    pygame.draw.rect(
+        tela,
+        (0, 0, 255),
+        (x, y, largura_atual, altura)
+    )
+    pygame.draw.rect(
+        tela,
+        (255, 255, 255),
+        (x, y, largura_total, altura),
+        2
+    )
 
 def verificar_ataque(atacante, defensor):
     if not atacante.atacando: # Se o atacante não realiza o ataque a função não é realizada
@@ -49,6 +71,7 @@ def verificar_ataque(atacante, defensor):
     # Se o programa detecta a colisão da hitbox com o adversário e o ataque acertado está False
     if (hitbox_ataque.colliderect(defensor.rect) and not atacante.acertou_ataque):
         defensor.receber_dano(atacante.dano) # Define o dano para o defensor
+        atacante.carregar_ultimate(10) #Define o aumento do ultimate para o atacante
         atacante.acertou_ataque = True # Define o ataque acertado como True
 
 

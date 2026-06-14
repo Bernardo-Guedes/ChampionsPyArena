@@ -34,6 +34,8 @@ class Personagem(pygame.sprite.Sprite):
         self.vida_maxima = 100
         self.vida = self.vida_maxima
         self.dano = 5
+        self.ultimate = 0
+        self.ultimate_maximo = 100
         self.acertou_ataque = False
 
     def atacar(self):
@@ -46,6 +48,11 @@ class Personagem(pygame.sprite.Sprite):
         self.vida -= dano
         if self.vida < 0:
             self.vida = 0
+
+    def carregar_ultimate(self, progresso_ultimate):
+        self.ultimate += progresso_ultimate
+        if self.ultimate > self.ultimate_maximo:
+            self.ultimate = self.ultimate_maximo
 
     def update(self):
         if self.atacando:

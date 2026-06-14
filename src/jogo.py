@@ -1,6 +1,6 @@
 import pygame
 from src.config import (LARGURA_TELA, ALTURA_TELA, FPS, TITULO_JOGO, CINZA, PRETO)
-from src.funcoes import ( desenhar_barra_vida, verificar_ataque, limitar_valor )
+from src.funcoes import ( desenhar_barra_vida, desenhar_barra_ultimate, verificar_ataque, limitar_valor )
 from src.personagem import Personagem
 
 def tela_inicio(tela):
@@ -22,59 +22,6 @@ def tela_inicio(tela):
         pygame.display.flip()
 
     return True
-
-
-# Define uma funcão que desenha a barra de vida na tela
-def desenhar_barra_vida(tela, x, y, vida, vida_maxima):
-    largura_total = 300 #largura total da barra
-    altura = 30
-    porcentagem = vida / vida_maxima
-    largura_atual = largura_total * porcentagem # quando a vida é diminuida, a largura atual é diminuida de acordo com a vida restante
-
-    #barra vermelha
-    pygame.draw.rect(
-        tela,(255, 0, 0),(x, y, largura_total, altura)
-        )
-     
-    #barra verde da vida restante
-    pygame.draw.rect(
-        tela,(0, 255, 0), (x, y, largura_atual, altura)
-    )
-
-    #borda
-    pygame.draw.rect(
-        tela,(255, 255, 255),(x, y, largura_total, altura), 2
-    )
-
-# Função que detecta se o ataque acertou o oponente
-def verificar_ataque(atacante, defensor):
-
-    if not atacante.ataque: # Se o atacante não realiza o ataque a função não é realizada
-        return
-    
-    if int(atacante.atual) != 16: # Se o frame do ataque não é 16 (momento em que o movimento de ataque acerta o oponente) a função não é realizada
-        return
-
-    if atacante.direcao == 1: # Se o atacante estiver olhando para direita
-        hitbox_ataque = pygame.Rect( # Define a hitbox de ataque
-            atacante.rect.right, 
-            atacante.rect.y + 20, # A hitbox é posicionada a frente, para verificar se é o golpe que pega no adversário
-            50, # Largura
-            50 # Altura
-        )
-    else: # caso o atacante esteja olhando pra esquerda
-        hitbox_ataque = pygame.Rect( 
-            atacante.rect.left - 50,
-            atacante.rect.y + 20,
-            50,
-            50
-        )
-
-    # Se o programa detecta a colisão da hitbox com o adversário e o ataque acertado está False
-    if (hitbox_ataque.colliderect(defensor.rect) and not atacante.acertou_ataque):
-        defensor.receber_dano(atacante.dano) # Define o dano para o defensor
-        atacante.acertou_ataque = True # Define o ataque acertado como True
-
 
 def executar_jogo():
     """Executa o loop principal do jogo e controla estado, colisões e pontuação."""
@@ -152,9 +99,11 @@ def executar_jogo():
 
         tela.fill(CINZA)
 
-        # Desenha a barra de vida e vai atualizando enquanto o jogo roda
+        # Desenha a barra de vida e de ultimate e vai atualizando enquanto o jogo roda
         desenhar_barra_vida(tela, 90, 30, personagem1.vida, personagem1.vida_maxima)
         desenhar_barra_vida(tela, 1000, 30, personagem2.vida, personagem2.vida_maxima)
+        desenhar_barra_ultimate(tela, 90, 60, personagem1.ultimate, personagem1.ultimate_maximo)
+        desenhar_barra_ultimate(tela, 1000, 60, personagem2.ultimate, personagem2.ultimate_maximo)
 
         todas_sprites.update()
         for sprite in todas_sprites:
