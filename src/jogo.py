@@ -41,7 +41,7 @@ def executar_jogo():
     rodando = True
     velocidade = 5
     inico_luta = pygame.time.get_ticks() # Define o início do tempo de luta quando as animações são carregadas
-    tempo_luta = 20 # Define o tempo de luta em segundos
+    tempo_luta = 121 # Define o tempo de luta em segundos
     fonte = pygame.font.SysFont("Arial", 40, True) # Define o estilo da fonte do cronômetro
 
     # Loop principal: processa entrada, atualiza estado e renderiza a cena.
