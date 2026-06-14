@@ -8,10 +8,18 @@ BRANCO = (255, 255, 255)
 PRETO = (0, 0, 0)
 CINZA = (212,212,212)
 
-CAMINHO_RECORDE = "data/recorde.txt"
-CAMINHO_SPRITE_IDLE = "assets/imagens/sprite_idle.bmp"
-CAMINHO_SPRITE_ATTACK = "assets/imagens/sprite_attack.bmp"
-CAMINHO_SPRITE_RUN = "assets/imagens/sprite_run.bmp"
+CAMINHO_CENARIO = "assets/imagens/tela/cenario.png"
+CAMINHO_FUNDO_INICIAL = "assets/imagens/tela/fundo_inicial.png"
+CAMINHO_FUNDO_HISTORICO = "assets/imagens/tela/fundo_historico.png"
+CAMINHO_LOGO = "assets/imagens/tela/logo.png"
+CAMINO_START = "assets/imagens/tela/btn_start.png"
+CAMINHO_EXIT = "assets/imagens/tela/btn_exit.png"
+CAMINHO_BACK = "assets/imagens/tela/btn_voltar.png"
+CAMINHO_BTN_HISTORICO = "assets/imagens/tela/btn_historico.png"
+CAMINHO_ARQ_HISTORICO = "data/historico.txt"
+CAMINHO_SPRITE_IDLE = "assets/imagens/sprites/sprite_idle.bmp"
+CAMINHO_SPRITE_ATTACK = "assets/imagens/sprites/sprite_attack.bmp"
+CAMINHO_SPRITE_RUN = "assets/imagens/sprites/sprite_run.bmp"
 
 FRAMES_IDLE = [
         (59, 107, 105, 87),
