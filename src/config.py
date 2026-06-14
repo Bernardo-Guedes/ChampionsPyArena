@@ -22,6 +22,7 @@ CAMINHO_SPRITE_IDLE = "assets/imagens/sprites/sprite_idle.bmp"
 CAMINHO_SPRITE_ATTACK = "assets/imagens/sprites/teste_sprite.bmp"
 CAMINHO_SPRITE_CHUTE = "assets/imagens/sprites/sprite_chute.bmp"
 CAMINHO_SPRITE_RUN = "assets/imagens/sprites/sprite_movimentacao.bmp"
+CAMINHO_SPRITE_ESPECIAL = "assets/imagens/sprites/sprite_especial.bmp"
 
 FRAMES_IDLE = [
         (59, 107, 105, 87),
@@ -60,4 +61,10 @@ FRAMES_RUN = [
     (841,  6, 413, 421),   # Frame 3
     (1266, 6, 419, 421),   # Frame 4
     (1697, 6, 413, 420),   # Frame 5
+]
+
+FRAMES_ESPECIAL = [
+    (8,    8, 606, 559),   # Frame 1 — Pose de guarda (idle pré-ataque)
+    (614,  8, 615, 559),   # Frame 2 — Carga com aura azul (espada erguida)
+    (1229, 8, 610, 559),   # Frame 3 — Liberação do corte de energia
 ]
