@@ -52,7 +52,7 @@ def verificar_ataque(atacante, defensor):
     if not atacante.atacando: # Se o atacante não realiza o ataque a função não é realizada
         return
         
-    if int(atacante.frame) != 8:
+    if int(atacante.frame) != 4:
         return
 
     if atacante.direcao == 1: # Se o atacante estiver olhando para direita

@@ -3,10 +3,13 @@ from src.config import (
     ALTURA_TELA,
     CAMINHO_SPRITE_IDLE,
     CAMINHO_SPRITE_ATTACK,
+    CAMINHO_SPRITE_CHUTE,
     CAMINHO_SPRITE_RUN,
     FRAMES_IDLE,
     FRAMES_ATTACK,
-    FRAMES_RUN
+    FRAMES_CHUTE,
+    FRAMES_RUN, 
+
 )
 from src.sprites import ( carregar_animacao )
 
@@ -14,9 +17,9 @@ class Personagem(pygame.sprite.Sprite):
     def __init__(self, rect_x):
         super().__init__()
         self.animacoes = {
-            "idle": carregar_animacao(CAMINHO_SPRITE_IDLE, FRAMES_IDLE),
-            "attack": carregar_animacao(CAMINHO_SPRITE_ATTACK, FRAMES_ATTACK),
-            "run": carregar_animacao(CAMINHO_SPRITE_RUN, FRAMES_RUN)
+            "idle": carregar_animacao(CAMINHO_SPRITE_CHUTE, FRAMES_CHUTE, 0.5),
+            "attack": carregar_animacao(CAMINHO_SPRITE_ATTACK, FRAMES_ATTACK, 0.5),
+            "run": carregar_animacao(CAMINHO_SPRITE_RUN, FRAMES_RUN, 0.4)
         }
         self.animacoes_inverso = {
             nome: [
