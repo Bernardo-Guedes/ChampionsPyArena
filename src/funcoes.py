@@ -1,4 +1,5 @@
 import pygame
+from src.config import CAMINHO_ARQ_HISTORICO
 
 def desenhar_barra_vida(tela, x, y, vida, vida_maxima):
     largura_total = 300
@@ -50,7 +51,7 @@ def verificar_ataque(atacante, defensor):
     if not atacante.atacando: # Se o atacante não realiza o ataque a função não é realizada
         return
         
-    if int(atacante.frame) != 8:
+    if int(atacante.frame) != 4:
         return
 
     if atacante.direcao == 1: # Se o atacante estiver olhando para direita
@@ -74,6 +75,29 @@ def verificar_ataque(atacante, defensor):
         atacante.carregar_ultimate(10) #Define o aumento do ultimate para o atacante
         atacante.acertou_ataque = True # Define o ataque acertado como True
 
+def carregar_historico():
+    partidas = []
+    contador = 0
+    try:
+        with open(CAMINHO_ARQ_HISTORICO, "r", encoding="utf-8") as arquivo:
+            for linha in arquivo:
+                if contador < 5:
+                    partidas.append(linha.strip())
+                    contador += 1
+                else:
+                    break
+    except FileNotFoundError:
+        pass
+    return partidas
+
+def desenhar_historico(tela, partidas, fonte):
+    y = 255
+    for partida in partidas:
+        campeao, data, duracao = partida.split("|")
+        tela.blit(fonte.render(campeao, True, (255, 255, 255)),(300, y))
+        tela.blit(fonte.render(data, True, (255, 255, 255)),(600, y))
+        tela.blit(fonte.render(duracao, True, (255, 255, 255)),(1000, y))
+        y += 50
 
 def limitar_valor(valor, minimo, maximo):
     """Mantém um valor dentro do intervalo [minimo, maximo]."""
