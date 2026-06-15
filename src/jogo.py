@@ -1,6 +1,6 @@
 import pygame
 from src.config import (LARGURA_TELA, ALTURA_TELA, FPS, TITULO_JOGO, CAMINHO_CENARIO, CAMINHO_ARQ_HISTORICO)
-from src.funcoes import ( desenhar_barra_vida, desenhar_barra_ultimate, verificar_ataque, verificar_especial, limitar_valor)
+from src.funcoes import ( desenhar_barra_vida, desenhar_barra_ultimate, verificar_ataque, verificar_chute, verificar_especial, limitar_valor)
 from src.telas import (tela_inicio, tela_fim, tela_historico)
 from src.personagem import Personagem
 from datetime import datetime
@@ -77,6 +77,8 @@ def executar_jogo():
                 
             verificar_ataque(personagem1, personagem2) 
             verificar_ataque(personagem2, personagem1)
+            verificar_chute(personagem1, personagem2)
+            verificar_chute(personagem2, personagem1)
             verificar_especial(personagem1, personagem2)
             verificar_especial(personagem2, personagem1)
 
@@ -89,10 +91,14 @@ def executar_jogo():
                 if evento.type == pygame.KEYDOWN:
                     if evento.key == pygame.K_w:
                         personagem1.atacar()
+                    if evento.key == pygame.K_q:
+                        personagem1.chutar()
                     if evento.key == pygame.K_e:
                         personagem1.atacar_especial()
                     if evento.key == pygame.K_UP:
                         personagem2.atacar()
+                    if evento.key == pygame.K_DOWN:
+                        personagem2.chutar()
                     if evento.key == pygame.K_RETURN:
                         personagem2.atacar_especial()             
 

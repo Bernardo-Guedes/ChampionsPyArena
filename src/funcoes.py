@@ -75,6 +75,32 @@ def verificar_ataque(atacante, defensor):
         atacante.carregar_ultimate(10) #Define o aumento do ultimate para o atacante
         atacante.acertou_ataque = True # Define o ataque acertado como True
 
+def verificar_chute(atacante, defensor):
+    if not atacante.chutando:
+        return
+ 
+    # FRAMES_CHUTE tem 7 frames — o impacto acontece no frame 4 (igual ao soco)
+    if int(atacante.frame) != 4:
+        return
+ 
+    if atacante.direcao == 1:
+        hitbox_ataque = pygame.Rect(
+            atacante.rect.right, 
+            atacante.rect.y + 20, 
+            50, 
+            50)
+    else:
+        hitbox_ataque = pygame.Rect(
+            atacante.rect.left - 50, 
+            atacante.rect.y + 20, 
+            50, 
+            50)
+ 
+    if hitbox_ataque.colliderect(defensor.rect) and not atacante.acertou_chute:
+        defensor.receber_dano(atacante.dano_chute)
+        atacante.carregar_ultimate(10)
+        atacante.acertou_chute = True
+
 def verificar_especial(atacante, defensor):
     if not atacante.usando_ultimate:
         return

@@ -22,7 +22,8 @@ class Personagem(pygame.sprite.Sprite):
             "idle": carregar_animacao(CAMINHO_SPRITE_CHUTE, FRAMES_CHUTE, 0.5),
             "attack": carregar_animacao(CAMINHO_SPRITE_ATTACK, FRAMES_ATTACK, 0.5),
             "run": carregar_animacao(CAMINHO_SPRITE_RUN, FRAMES_RUN, 0.4),
-            "especial": carregar_animacao(CAMINHO_SPRITE_ESPECIAL, FRAMES_ESPECIAL, 0.4)
+            "especial": carregar_animacao(CAMINHO_SPRITE_ESPECIAL, FRAMES_ESPECIAL, 0.4),
+            "chute": carregar_animacao(CAMINHO_SPRITE_CHUTE, FRAMES_CHUTE, 0.5)
         }
         self.animacoes_inverso = {
             nome: [
@@ -33,6 +34,7 @@ class Personagem(pygame.sprite.Sprite):
         }
         self.estado = "idle"
         self.atacando = False
+        self.chutando = False
         self.frame = 0
         self.direcao = 1
         self.rect = pygame.Rect(0, 0, 222, 180)
@@ -40,10 +42,12 @@ class Personagem(pygame.sprite.Sprite):
         self.vida_maxima = 100
         self.vida = self.vida_maxima
         self.dano = 5
+        self.dano_chute = 5
         self.dano_ultimate = 20
         self.ultimate = 0
         self.ultimate_maximo = 100
         self.acertou_ataque = False
+        self.acertou_chute = False
         self.usando_ultimate = False
         self.acertou_ultimate = False
         
@@ -52,6 +56,12 @@ class Personagem(pygame.sprite.Sprite):
         if not self.atacando:
             self.atacando = True
             self.acertou_ataque = False
+            self.frame = 0
+    
+    def chutar(self):
+        if not self.chutando and not self.atacando and not self.usando_ultimate:
+            self.chutando = True
+            self.acertou_chute = False
             self.frame = 0
 
     def atacar_especial(self):
@@ -87,6 +97,11 @@ class Personagem(pygame.sprite.Sprite):
             if self.frame >= len(self.animacoes["attack"]):
                 self.frame = 0
                 self.atacando = False
+        elif self.chutando:
+            self.frame += 0.15
+            if self.frame >= len(self.animacoes["chute"]):
+                self.frame = 0
+                self.chutando = False
         else:
             velocidade_animacao = {
                 "idle": 0.1,
@@ -102,6 +117,8 @@ class Personagem(pygame.sprite.Sprite):
             animacao = "especial"
         elif self.atacando:
             animacao = "attack"
+        elif self.chutando:
+            animacao = "chute"
         else:
             animacao = self.estado
         if self.direcao == 1:
