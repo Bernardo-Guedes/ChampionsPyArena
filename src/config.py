@@ -90,14 +90,15 @@ FRAMES_RUN_2 = [
 ]
 
 FRAMES_ESPECIAL_1 = [
-    (8,    8, 606, 559),
-    (614,  8, 615, 559),
-    (1229, 8, 610, 559)
+    (119,  136, 263, 354),   # Frame 1 — postura inicial
+    (666,   46, 310, 442),   # Frame 2 — carga / expansão
+    (1204, 106, 307, 387),   # Frame 3 — liberação do especial
+    (1518, 106, 277, 349),   # Frame 4 — retorno à guarda
 ]
 
 FRAMES_ESPECIAL_2 = [
-    (10,   17, 436, 432),
-    (466,  17, 453, 432),
-    (937,  17, 453, 432),
-    (1409, 17, 435, 432)
+    (70,   85, 362, 379),   # Frame 1 — postura inicial
+    (558,  68, 456, 396),   # Frame 2 — carga / recuo
+    (1171, 19, 400, 452),   # Frame 3 — liberação do especial
+    (1683, 20, 382, 455),   # Frame 4 — retorno à guarda
 ]

@@ -1,19 +1,28 @@
-def salvar_recorde(caminho_arquivo, pontuacao):
-    """Salva a pontuação recorde em arquivo texto."""
-    with open(caminho_arquivo, "w", encoding="utf-8") as arquivo:
-        arquivo.write(str(pontuacao))
+from src.config import CAMINHO_ARQ_HISTORICO
 
-
-def carregar_recorde(caminho_arquivo):
-    """Carrega o recorde salvo; retorna 0 se não existir valor válido."""
+def carregar_historico():
+    partidas = []
+    contador = 0
     try:
-        with open(caminho_arquivo, "r", encoding="utf-8") as arquivo:
-            conteudo = arquivo.read().strip()
+        with open(CAMINHO_ARQ_HISTORICO, "r", encoding="utf-8") as arquivo:
+            for linha in arquivo:
+                if contador < 5:
+                    partidas.append(linha.strip())
+                    contador += 1
+                else:
+                    break
+    except FileNotFoundError:
+        pass
+    return partidas
 
-            if conteudo == "":
-                return 0
-
-            return int(conteudo)
+def atualizar_historico(nova_partida):
+    try:
+        with open(CAMINHO_ARQ_HISTORICO, "r", encoding="utf-8") as arquivo:
+            conteudo_antigo = arquivo.read()
 
     except FileNotFoundError:
-        return 0
+        conteudo_antigo = ""
+
+    with open(CAMINHO_ARQ_HISTORICO, "w", encoding="utf-8") as arquivo:
+        arquivo.write(nova_partida)
+        arquivo.write(conteudo_antigo)

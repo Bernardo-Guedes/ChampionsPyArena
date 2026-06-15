@@ -38,7 +38,7 @@ personagem2_sprites = {
     "attack": (CAMINHO_ATTACK_2, FRAMES_ATTACK_2, 0.3),
     "chute": (CAMINHO_CHUTE_2, FRAMES_CHUTE_2, 0.5),
     "run": (CAMINHO_RUN_2, FRAMES_RUN_2, 0.4),
-    "especial": (CAMINHO_ESPECIAL_2, FRAMES_ESPECIAL_2, 0.4),
+    "especial": (CAMINHO_ESPECIAL_2, FRAMES_ESPECIAL_2, 0.3),
 }
 
 class Personagem(pygame.sprite.Sprite):
@@ -73,7 +73,6 @@ class Personagem(pygame.sprite.Sprite):
         self.acertou_chute = False
         self.usando_ultimate = False
         self.acertou_ultimate = False
-        
 
     def atacar(self):
         if not self.atacando:
@@ -99,6 +98,11 @@ class Personagem(pygame.sprite.Sprite):
         if self.vida < 0:
             self.vida = 0
     
+    def receber_dano_ultimate(self, dano_ultimate):
+        self.vida -= dano_ultimate
+        if self.vida < 0:
+            self.vida = 0
+
     def receber_dano_ultimate(self, dano_ultimate):
         self.vida -= dano_ultimate
         if self.vida < 0:

@@ -1,5 +1,6 @@
 import pygame
-from src.funcoes import (carregar_historico, desenhar_historico)
+from src.dados import carregar_historico
+from src.funcoes import (desenhar_historico)
 from src.config import (LARGURA_TELA, ALTURA_TELA, CAMINHO_FUNDO_INICIAL, CAMINHO_FUNDO_HISTORICO, CAMINHO_FUNDO_FIM, CAMINHO_LOGO, CAMINHO_BTN_HISTORICO, CAMINO_START, CAMINHO_EXIT, CAMINHO_BACK)
 
 tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))

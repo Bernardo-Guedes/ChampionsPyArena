@@ -1,5 +1,4 @@
 import pygame
-from src.config import CAMINHO_ARQ_HISTORICO
 
 def desenhar_barra_vida(tela, x, y, vida, vida_maxima):
     largura_total = 300
@@ -47,11 +46,13 @@ def desenhar_barra_ultimate(tela, x, y, ultimate, ultimate_maximo):
         2
     )
 
-def verificar_ataque(atacante, defensor):
+def verificar_ataque(atacante, defensor, personagem):
     if not atacante.atacando: # Se o atacante não realiza o ataque a função não é realizada
         return
         
-    if int(atacante.frame) != 4:
+    if personagem == 1 and int(atacante.frame) != 4:
+        return
+    if personagem == 2 and int(atacante.frame) != 2:
         return
 
     if atacante.direcao == 1: # Se o atacante estiver olhando para direita
@@ -72,15 +73,16 @@ def verificar_ataque(atacante, defensor):
     # Se o programa detecta a colisão da hitbox com o adversário e o ataque acertado está False
     if (hitbox_ataque.colliderect(defensor.rect) and not atacante.acertou_ataque):
         defensor.receber_dano(atacante.dano) # Define o dano para o defensor
-        atacante.carregar_ultimate(10) #Define o aumento do ultimate para o atacante
+        atacante.carregar_ultimate(50) #Define o aumento do ultimate para o atacante
         atacante.acertou_ataque = True # Define o ataque acertado como True
 
-def verificar_chute(atacante, defensor):
+def verificar_chute(atacante, defensor, personagem):
     if not atacante.chutando:
         return
- 
-    # FRAMES_CHUTE tem 7 frames — o impacto acontece no frame 4 (igual ao soco)
-    if int(atacante.frame) != 4:
+    
+    if personagem == 1 and int(atacante.frame) != 4:
+        return
+    if personagem == 2 and int(atacante.frame) != 2:
         return
  
     if atacante.direcao == 1:
@@ -101,11 +103,13 @@ def verificar_chute(atacante, defensor):
         atacante.carregar_ultimate(10)
         atacante.acertou_chute = True
 
-def verificar_especial(atacante, defensor):
+def verificar_especial(atacante, defensor, personagem):
     if not atacante.usando_ultimate:
         return
 
-    if int(atacante.frame) != 2:
+    if personagem == 1 and int(atacante.frame) != 2:
+        return
+    if personagem == 2 and int(atacante.frame) != 1:
         return
 
     if atacante.direcao == 1:
@@ -122,25 +126,9 @@ def verificar_especial(atacante, defensor):
             50,
             50
         )
-
     if hitbox_ataque.colliderect(defensor.rect) and not atacante.acertou_ultimate:
         defensor.receber_dano_ultimate(atacante.dano_ultimate) 
         atacante.acertou_ultimate = True
-
-def carregar_historico():
-    partidas = []
-    contador = 0
-    try:
-        with open(CAMINHO_ARQ_HISTORICO, "r", encoding="utf-8") as arquivo:
-            for linha in arquivo:
-                if contador < 5:
-                    partidas.append(linha.strip())
-                    contador += 1
-                else:
-                    break
-    except FileNotFoundError:
-        pass
-    return partidas
 
 def desenhar_historico(tela, partidas, fonte):
     y = 255
