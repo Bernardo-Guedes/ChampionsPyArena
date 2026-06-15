@@ -75,6 +75,32 @@ def verificar_ataque(atacante, defensor):
         atacante.carregar_ultimate(10) #Define o aumento do ultimate para o atacante
         atacante.acertou_ataque = True # Define o ataque acertado como True
 
+def verificar_especial(atacante, defensor):
+    if not atacante.usando_ultimate:
+        return
+
+    if int(atacante.frame) != 2:
+        return
+
+    if atacante.direcao == 1:
+        hitbox_ataque = pygame.Rect(
+            atacante.rect.right,
+            atacante.rect.y + 20,
+            50,   
+            50
+        )
+    else:
+        hitbox_ataque = pygame.Rect(
+            atacante.rect.left - 80,
+            atacante.rect.y + 20,
+            50,
+            50
+        )
+
+    if hitbox_ataque.colliderect(defensor.rect) and not atacante.acertou_ultimate:
+        defensor.receber_dano_ultimate(atacante.dano_ultimate) 
+        atacante.acertou_ultimate = True
+
 def carregar_historico():
     partidas = []
     contador = 0
