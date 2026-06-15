@@ -2,7 +2,7 @@ import pygame
 from src.config import (LARGURA_TELA, ALTURA_TELA, FPS, TITULO_JOGO, CAMINHO_CENARIO, CAMINHO_ARQ_HISTORICO)
 from src.funcoes import ( desenhar_barra_vida, desenhar_barra_ultimate, verificar_ataque, verificar_chute, verificar_especial, limitar_valor)
 from src.telas import (tela_inicio, tela_fim, tela_historico)
-from src.personagem import Personagem
+from src.personagem import Personagem, personagem1_sprites, personagem2_sprites
 from datetime import datetime
 
 tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
@@ -35,8 +35,8 @@ def executar_jogo():
             continue
 
         todas_sprites = pygame.sprite.Group()
-        personagem1 = Personagem(100)
-        personagem2 = Personagem(1100)
+        personagem1 = Personagem(100, personagem1_sprites)
+        personagem2 = Personagem(1100, personagem2_sprites)
         personagem2.direcao = -1
         todas_sprites.add(personagem1)
         todas_sprites.add(personagem2)
