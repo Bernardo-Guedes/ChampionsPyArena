@@ -73,7 +73,7 @@ def verificar_ataque(atacante, defensor, personagem):
     # Se o programa detecta a colisão da hitbox com o adversário e o ataque acertado está False
     if (hitbox_ataque.colliderect(defensor.rect) and not atacante.acertou_ataque):
         defensor.receber_dano(atacante.dano) # Define o dano para o defensor
-        atacante.carregar_ultimate(50) #Define o aumento do ultimate para o atacante
+        atacante.carregar_ultimate(10) #Define o aumento do ultimate para o atacante
         atacante.acertou_ataque = True # Define o ataque acertado como True
 
 def verificar_chute(atacante, defensor, personagem):
@@ -146,7 +146,6 @@ def limitar_valor(valor, minimo, maximo):
     if valor > maximo:
         return maximo
     return valor
-
 
 def verificar_colisao(retangulo_1, retangulo_2):
     """Verifica sobreposição entre dois retângulos do Pygame."""

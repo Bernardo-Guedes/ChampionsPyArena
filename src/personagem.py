@@ -36,7 +36,7 @@ personagem1_sprites = {
 personagem2_sprites = {
     "idle": (CAMINHO_IDLE_2, FRAMES_IDLE_2, 0.16),
     "attack": (CAMINHO_ATTACK_2, FRAMES_ATTACK_2, 0.3),
-    "chute": (CAMINHO_CHUTE_2, FRAMES_CHUTE_2, 0.5),
+    "chute": (CAMINHO_CHUTE_2, FRAMES_CHUTE_2, 0.3),
     "run": (CAMINHO_RUN_2, FRAMES_RUN_2, 0.4),
     "especial": (CAMINHO_ESPECIAL_2, FRAMES_ESPECIAL_2, 0.3),
 }

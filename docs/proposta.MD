@@ -195,11 +195,12 @@ Escopo mínimo:
 
 Liste funcionalidades extras que o grupo poderá implementar se conseguir concluir o escopo mínimo.
 
-Melhorias possíveis:
+Melhorias possíveis (em ordem de prioridade):
 
-- Melhoria 1: Movimentação extra: Pular e agachar;
+- Melhoria 1: Efeitos sonoros e trilha sonora;
 - Melhoria 2: Movimentação extra: Defesa/bloqueio;
-- Melhoria 3: Movimentação extra: Combos de golpes;
-- Melhoria 4: Menu de seleção de personagem;
-- Melhoria 5: Menu de seleção de mapa;
-- Melhoria 6: Efeitos sonoros e trilha sonora;
+- Melhoria 3: Movimentação extra: Pular e agachar;
+- Melhoria 4: Movimentação extra: Combos de golpes;
+- Melhoria 5: Menu de seleção de personagem;
+- Melhoria 6: Menu de seleção de mapa;
+

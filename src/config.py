@@ -66,10 +66,10 @@ FRAMES_CHUTE_1 = [
 ]
 
 FRAMES_CHUTE_2 = [
-    (10,   16, 485, 464),
-    (511,  16, 485, 464),
-    (1013, 16, 484, 464),
-    (1513, 16, 486, 464)
+    (47,   65, 404, 391),   # Frame 1 — postura inicial
+    (562,  54, 472, 411),   # Frame 2 — joelho levantado / preparação
+    (1207, 45, 357, 412),   # Frame 3 — impacto do chute
+    (1696, 65, 401, 388),   # Frame 4 — retorno à guarda
 ]
 
 FRAMES_RUN_1 = [
