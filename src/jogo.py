@@ -49,7 +49,7 @@ def executar_jogo():
 
         inicio_partida = datetime.now()
         inicio_luta = pygame.time.get_ticks() # Define o início do tempo de luta quando as animações são carregadas
-        tempo_luta = 121 # Define o tempo de luta em segundos
+        tempo_luta = 30 # Define o tempo de luta em segundos
         fonte = pygame.font.SysFont("Arial", 40, True) # Define o estilo da fonte do cronômetro
         mensagem_fim = ""
 

@@ -1,8 +1,6 @@
 # Nome do Jogo
 
-Projeto final da disciplina de Introdução a Algoritmos/Programação, desenvolvido com Python e Pygame.
-
-Este repositório é um template para os grupos da disciplina. A proposta é começar com uma base funcional e evoluir o jogo ao longo do semestre.
+> Champions of the Py Arena
 
 ## Integrantes do grupo
 
@@ -13,59 +11,54 @@ Este repositório é um template para os grupos da disciplina. A proposta é com
 ## Estrutura do projeto
 
 - `main.py`: ponto de entrada da aplicação.
-- `src/`: código-fonte principal do jogo (loop, regras, sprites e dados).
+- `src/`: código-fonte principal do jogo (loop, regras, sprites, dados, telas, personagens).
 - `assets/`: imagens, fontes e sons.
-- `data/`: arquivos persistentes (recorde/ranking).
+- `data/`: arquivos persistentes (histórico).
 - `tests/`: testes unitários com `pytest`.
 - `docs/`: documentação do projeto, incluindo proposta inicial.
 
 ## Descrição do jogo
 
-Descreva brevemente a ideia principal do jogo.
+> Champions of the Py Arena é um jogo de luta local para dois jogadores em que cada participante controla um personagem dentro de uma arena. O objetivo é derrotar o adversário reduzindo sua barra de vida a zero por meio de ataques e movimentação estratégica. 
+> Durante a partida, os jogadores devem escapar dos golpes inimigos e encontrar oportunidades para atacar. Os jogadores podem utilizar uma habilidade especial chamada "Ultimate" que é desbloqueada quando sua barra é totalmente preenchida.
 
-Exemplo:
-
-> O jogo consiste em controlar um personagem que deve coletar moedas e evitar obstáculos. O jogador ganha pontos ao coletar itens e perde vidas ao colidir com obstáculos. A partida termina quando o tempo acaba ou quando o jogador perde todas as vidas.
 
 ## Objetivo do jogador
 
-Explique o que o jogador precisa fazer para vencer ou avançar no jogo.
-
-Exemplo:
-
-> O objetivo é coletar a maior quantidade possível de itens antes que o tempo acabe, evitando colisões com os obstáculos.
+> O objetivo é evitar os golpes desferidos pelo adversário, encontrar momentos oportunos para desferir e acertar golpes, para entãoreduzir os pontos de vida do oponente a zero, vencendo a disputa.
 
 ## Regras do jogo
 
-Liste as principais regras do jogo.
+- Regra 1: O jogador se movimenta usando as setas do teclado ou WASD.
+- Regra 2: O jogador começa com 100 pontos de vida.
+- Regra 3: Cada golpe aplicado tira 5 pontos de vida do adversário.
+- Regra 4: Cada golpe aplicado no adversário aumenta o preenchimento da barra do Ultimate.
+- Regra 5: Ao atingir 20 pontos de vida, o jogador libera automaticamente o Ultimate - Ainda não implementado
+- Regra 6: O jogador vence e o combate termina se o adversário chegar a 0 pontos de vida.
 
-Exemplo:
-
-- O jogador se movimenta usando as setas do teclado.
-- Cada item coletado aumenta a pontuação.
-- Colidir com um obstáculo reduz a quantidade de vidas.
-- A partida termina quando o jogador perde todas as vidas ou quando o tempo acaba.
 
 ## Controles
 
-Informe as teclas ou comandos utilizados no jogo.
+- Tecla A: mover para esquerda (jogador 1)
+- Tecla D: mover para direita (jogador 1)
+- Tecla W: soco (jogador 1)
+- Tecla S: chute (jogador 1)
+- Tecla E: Ultimate (jogador 1)
+- Seta para esquerda: mover para esquerda (jogador 2)
+- Seta para direita: mover para direita (jogador 2)
+- Seta para cima: soco (jogador 2)
+- Seta para baixo: chute (jogador 2)
+- Enter: Ultimate (jogador 2)
+- ESC: Menu de Pause - Ainda não implementado
 
-Exemplo:
-
-- Seta para cima: mover para cima
-- Seta para baixo: mover para baixo
-- Seta para esquerda: mover para esquerda
-- Seta para direita: mover para direita
-- Espaço: realizar ação
-- ESC: sair do jogo
 
 ## Como executar o projeto
 
 ### 1. Clonar o repositório
 
 ```bash
-git clone LINK_DO_REPOSITORIO
-cd NOME_DA_PASTA
+git clone https://github.com/Bernardo-Guedes/ChampionsPyArena
+cd ChampionsPyArena
 pip install -r requirements.txt
 python main.py
 ```
