@@ -1,3 +1,14 @@
+18/06/2026 14:48:22 | Campeão: Jogador 2 | 01:18
+18/06/2026 13:48:09 | Campeão: Jogador 1 | 00:21
+18/06/2026 13:41:04 | Campeão: Jogador 1 | 00:21
+18/06/2026 13:40:26 | Campeão: Empate | 00:09
+18/06/2026 13:37:14 | Campeão: Jogador 1 | 00:08
+18/06/2026 13:35:10 | Campeão: Jogador 1 | 00:12
+18/06/2026 13:34:42 | Campeão: Jogador 1 | 00:14
+18/06/2026 13:29:57 | Campeão: Empate | 00:18
+18/06/2026 11:01:03 | Campeão: Jogador 1 | 00:42
+18/06/2026 10:31:48 | Campeão: Empate | 00:03
+18/06/2026 10:26:51 | Campeão: Empate | 00:31
 14/06/2026 22:13:09 | Campeão: Jogador 1 | 00:31
 14/06/2026 22:09:41 | Campeão: Jogador 1 | 00:31
 14/06/2026 21:31:51 | Campeão: Jogador 1 | 00:16

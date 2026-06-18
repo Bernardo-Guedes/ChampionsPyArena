@@ -1,13 +1,16 @@
 import pygame
 from src.dados import carregar_historico
 from src.funcoes import (desenhar_historico)
-from src.config import (LARGURA_TELA, ALTURA_TELA, CAMINHO_FUNDO_INICIAL, CAMINHO_FUNDO_HISTORICO, CAMINHO_FUNDO_FIM, CAMINHO_LOGO, CAMINHO_BTN_HISTORICO, CAMINO_START, CAMINHO_EXIT, CAMINHO_BACK)
+from src.config import (LARGURA_TELA, ALTURA_TELA, CAMINHO_FUNDO_INICIAL, CAMINHO_FUNDO_HISTORICO, CAMINHO_FUNDO_FIM, CAMINHO_LOGO, CAMINHO_TITULO_PAUSE, CAMINHO_BTN_HISTORICO, CAMINHO_START, CAMINHO_RESUME, CAMINHO_EXIT, CAMINHO_BACK)
 
 tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
 
 logo = pygame.image.load(CAMINHO_LOGO).convert_alpha()
 logo = pygame.transform.scale(logo, (700, 350))
-start_img = pygame.image.load(CAMINO_START).convert_alpha()
+titulo_pause = pygame.image.load(CAMINHO_TITULO_PAUSE).convert_alpha()
+titulo_pause = pygame.transform.scale(titulo_pause, (600, 171))
+start_img = pygame.image.load(CAMINHO_START).convert_alpha()
+resume_img = pygame.image.load(CAMINHO_RESUME).convert_alpha()
 exit_img = pygame.image.load(CAMINHO_EXIT).convert_alpha()
 back_img = pygame.image.load(CAMINHO_BACK).convert_alpha()
 historico_img = pygame.image.load(CAMINHO_BTN_HISTORICO).convert_alpha()
@@ -88,14 +91,37 @@ def tela_historico(tela):
         back_button.draw()
         pygame.display.flip()
 
+def tela_pause(tela):
+    resume_button = Button(0, 410, resume_img, 0.2)
+    resume_button.rect.x = LARGURA_TELA // 2 - resume_button.rect.width // 2
+    exit_button = Button(0, 480, exit_img, 0.15)
+    exit_button.rect.x = LARGURA_TELA // 2 - exit_button.rect.width // 2
+
+    while True:
+        for evento in pygame.event.get():
+
+            if evento.type == pygame.QUIT:
+                return "exit"
+
+            if exit_button.is_clicked(evento):
+                return "menu"
+            
+            if resume_button.is_clicked(evento):
+                return "continuar"
+
+        tela.blit(fundo_inicial, (0, 0))
+        tela.blit(titulo_pause, (LARGURA_TELA // 2 - titulo_pause.get_width() // 2, 40))
+        resume_button.draw()
+        exit_button.draw()
+        pygame.display.flip()
 
 def tela_fim(tela, mensagem):
 
     back_button = Button(0, 530, back_img, 0.14)
     back_button.rect.x = LARGURA_TELA // 2 - back_button.rect.width // 2
 
-    fonte = pygame.font.SysFont("Arial", 60, True)
-    fonte_sub = pygame.font.SysFont("Arial", 36, True)
+    fonte = pygame.font.Font("assets/fontes/PressStart2P-Regular.ttf", 36)
+    fonte_sub = pygame.font.Font("assets/fontes/PressStart2P-Regular.ttf", 26)
 
     while True:
         for evento in pygame.event.get():
@@ -105,7 +131,8 @@ def tela_fim(tela, mensagem):
                 return "menu"
         tela.blit(fundo_fim, (0, 0))
         texto = fonte.render(mensagem, True, (255, 255, 255))
-        tela.blit(texto, (LARGURA_TELA // 2 - texto.get_width() // 2 + 70, ALTURA_TELA // 2 - texto.get_height() // 2 + 35))
+        texto_rect = texto.get_rect(center=(LARGURA_TELA // 2 + 15, ALTURA_TELA // 2 + 35))
+        tela.blit(texto, texto_rect)
         subtexto = fonte_sub.render("CAMPEÃO", True, (255, 215, 0))
         tela.blit(subtexto, (LARGURA_TELA // 2 - subtexto.get_width() // 2, ALTURA_TELA // 2 - 60))
         back_button.draw()
