@@ -67,7 +67,7 @@ class Personagem(pygame.sprite.Sprite):
         self.defendendo = False
         self.frame = 0
         self.direcao = 1
-        self.rect = pygame.Rect(0, 0, 222, 180)
+        self.rect = pygame.Rect(0, 0, 50, 130)
         self.rect.topleft = (rect_x, ALTURA_TELA-300)
         self.vida_maxima = 100
         self.vida = self.vida_maxima

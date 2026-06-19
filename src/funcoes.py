@@ -36,16 +36,16 @@ def verificar_ataque(atacante, defensor, personagem):
     if atacante.direcao == 1: # Se o atacante estiver olhando para direita
         hitbox_ataque = pygame.Rect( # Define a hitbox de ataque
             atacante.rect.right, 
-            atacante.rect.y + 20, # A hitbox é posicionada a frente, para verificar se é o golpe que pega no adversário
-            50, # Largura
-            50 # Altura
+            atacante.rect.y + 30, # A hitbox é posicionada a frente, para verificar se é o golpe que pega no adversário
+            70, # Largura
+            60 # Altura
         )
     else: # caso o atacante esteja olhando pra esquerda
         hitbox_ataque = pygame.Rect( 
-            atacante.rect.left - 50,
-            atacante.rect.y + 20,
-            50,
-            50
+            atacante.rect.left - 70,
+            atacante.rect.y + 30,
+            70,
+            60
         )
 
     # Se o programa detecta a colisão da hitbox com o adversário e o ataque acertado está False
@@ -67,15 +67,15 @@ def verificar_chute(atacante, defensor, personagem):
     if atacante.direcao == 1:
         hitbox_ataque = pygame.Rect(
             atacante.rect.right, 
-            atacante.rect.y + 20, 
-            50, 
-            50)
+            atacante.rect.y + 30, 
+            70, 
+            60)
     else:
         hitbox_ataque = pygame.Rect(
-            atacante.rect.left - 50, 
-            atacante.rect.y + 20, 
-            50, 
-            50)
+            atacante.rect.left - 70, 
+            atacante.rect.y + 30, 
+            70, 
+            60)
  
     if hitbox_ataque.colliderect(defensor.rect) and not atacante.acertou_chute:
         dano_aplicado = defensor.receber_dano(atacante.dano_chute)
@@ -95,16 +95,16 @@ def verificar_especial(atacante, defensor, personagem):
     if atacante.direcao == 1:
         hitbox_ataque = pygame.Rect(
             atacante.rect.right,
-            atacante.rect.y + 20,
-            50,   
-            50
+            atacante.rect.y + 50,
+            70,   
+            60
         )
     else:
         hitbox_ataque = pygame.Rect(
-            atacante.rect.left - 80,
-            atacante.rect.y + 20,
-            50,
-            50
+            atacante.rect.left - 70,
+            atacante.rect.y + 40,
+            70,
+            60
         )
     if hitbox_ataque.colliderect(defensor.rect) and not atacante.acertou_ultimate:
         defensor.receber_dano_ultimate(atacante.dano_ultimate) 

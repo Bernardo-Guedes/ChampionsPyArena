@@ -139,7 +139,7 @@ def executar_jogo():
                 personagem1.defendendo = True
             else:
                 personagem1.defendendo = False
-            if teclas[pygame.K_KP0]:
+            if teclas[pygame.K_RSHIFT]:
                 personagem2.defendendo = True
             else:
                 personagem2.defendendo = False
