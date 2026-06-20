@@ -1,4 +1,6 @@
 from src.personagem import Personagem, personagem1_sprites
+import pygame
+pygame.display.set_mode((1,1))
 
 def test_receber_dano_reduz_vida():
     p = Personagem(100, personagem1_sprites)
@@ -11,4 +13,10 @@ def test_receber_dano_reduz_vida():
     p.receber_dano(20)
 
     assert p.vida == 80
->>>>>>> c5d5bfd8d8bf2e4594fbe5fa5917d6536e7cdf48
+
+def test_bloquear_dano_mantem_vida():
+    p = Personagem(100, personagem1_sprites)
+    p.defendendo = True
+    p.receber_dano(20)
+
+    assert p.vida == 100
