@@ -4,7 +4,8 @@ Pasta destinada a sprites, fundos, icones e outros elementos visuais.
 
 ## Conteudo atual
 
-- `spritesheet.bmp`: spritesheet base do template.
+- `sprites`: sprites dos personagens e suas animações.
+- `tela`: fundos, cenários, logos e botões de telas
 
 ## Recomendações
 

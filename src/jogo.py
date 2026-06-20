@@ -1,143 +1,316 @@
 import pygame
+from src.config import (LARGURA_TELA, ALTURA_TELA, FPS, TITULO_JOGO, CAMINHO_CENARIO, CAMINHO_ARQ_HISTORICO)
+from src.funcoes import ( desenhar_barra_vida, desenhar_barra_ultimate, verificar_ataque, verificar_chute, verificar_especial, limitar_valor)
+from src.telas import (tela_inicio, tela_pause, tela_fim, tela_historico)
+from src.personagem import Personagem, personagem1_sprites, personagem2_sprites
+from src.dados import atualizar_historico
+from datetime import datetime
 
-from src.config import (
-    LARGURA_TELA,
-    ALTURA_TELA,
-    FPS,
-    TITULO_JOGO,
-    CINZA,
-    CAMINHO_RECORDE,
-    CAMINHO_SPRITES,
-)
-
-from src.funcoes import (
-    calcular_pontos,
-    jogador_perdeu,
-    limitar_valor,
-    verificar_colisao,
-    tomar_dano,
-)
-from src.sprites import pegar_sprite
-from src.dados import (
-    salvar_recorde,
-    carregar_recorde,
-)
-
+tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
 
 def executar_jogo():
     """Executa o loop principal do jogo e controla estado, colisões e pontuação."""
     pygame.init()
-    
-
-    tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     pygame.display.set_caption(TITULO_JOGO)
 
+    cenario = pygame.image.load(CAMINHO_CENARIO).convert()
+    cenario = pygame.transform.scale(cenario, (1400, 600))
+    avatar1 = pygame.image.load("assets/imagens/tela/avatar1.png").convert_alpha()
+    avatar2 = pygame.image.load("assets/imagens/tela/avatar2.png").convert_alpha()
+    avatar1 = pygame.transform.smoothscale(avatar1, (90, 120))
+    avatar2 = pygame.transform.smoothscale(avatar2, (90, 120))
+    moldura_tempo = pygame.image.load("assets/imagens/tela/moldura_tempo.png").convert_alpha()
+    moldura_tempo = pygame.transform.smoothscale(moldura_tempo, (300, 77))
+    moldura_vida = pygame.image.load("assets/imagens/tela/moldura_vida.png").convert_alpha()
+    moldura_vida = pygame.transform.smoothscale(moldura_vida, (250, 37))
+    moldura_vida2 = pygame.transform.flip(moldura_vida, True, False)
+    moldura_ultimate = pygame.image.load("assets/imagens/tela/moldura_ultimate.png").convert_alpha()
+    moldura_ultimate = pygame.transform.smoothscale(moldura_ultimate, (250, 37))
+    moldura_ultimate2 = pygame.transform.flip(moldura_ultimate, True, False)
+    rect_moldura_tempo = moldura_tempo.get_rect(center=(LARGURA_TELA//2, 55))
+
+    pygame.mixer.init()
+    som_ataque1 = pygame.mixer.Sound("assets/sons/ataque1.wav")
+    som_ataque1.set_volume(0.6)
+
+    som_ataque2 = pygame.mixer.Sound("assets/sons/ataque2.wav")
+    som_ataque2.set_volume(0.9)
+
+    som_soco1 = pygame.mixer.Sound("assets/sons/soco1.wav")
+    som_soco1.set_volume(0.6)
+
+    som_soco2 = pygame.mixer.Sound("assets/sons/soco2.wav")
+    som_soco2.set_volume(0.6)
+
+    som_chute = pygame.mixer.Sound("assets/sons/chute.wav")
+    som_chute.set_volume(0.6)
+
+    som_especial1 = pygame.mixer.Sound("assets/sons/Especial1.wav")
+    som_especial1.set_volume(0.6)
+
+    som_especial2 = pygame.mixer.Sound("assets/sons/Especial2.wav")
+    som_especial2.set_volume(0.6)
+
+    som_defesa = pygame.mixer.Sound("assets/sons/Defesa.wav") 
+    som_defesa.set_volume(0.6)
+
+    som_corrida = pygame.mixer.Sound("assets/sons/Corrida.wav")
+    som_corrida.set_volume(1.0)
+
+
+    sons_ataques = [som_ataque1, som_ataque2]
+    sons_socos = [som_soco1, som_soco2]
+    sons_chute = [som_chute]
+    sons_especial = [som_especial1, som_especial2]
+
+
     relogio = pygame.time.Clock()
-    rodando = True
 
-    # 1. Carregando as imagens recortadas do Spritesheet
+    while True:
+        acao = tela_inicio(tela)
 
+        if acao == "exit":
+            pygame.quit()
+            return
+        
+        if acao == "historico":
+            resultado = tela_historico(tela)
+            if resultado == "exit":
+                pygame.quit()
+                return
+            continue
 
-    # Jogador: usando tamanho 110x110 para capturar o quadrado perfeitamente
-    player_image = pegar_sprite(CAMINHO_SPRITES, x=110, y=120, width=190, height=190, scale=0.5)
+        if acao != "start":
+            continue
 
-    # Gema pequena: usando tamanho 64x64
-    gem_image    = pegar_sprite(CAMINHO_SPRITES, x=900, y=690, width=200, height=200, scale=0.5)
+        pygame.mixer.music.load("assets/sons/Combate.wav")
+        pygame.mixer.music.set_volume(0.4)
+        pygame.mixer.music.play(-1)
 
-    # Morcego: usando tamanho 180x120 por causa das asas abertas
-    bat_image    = pegar_sprite(CAMINHO_SPRITES, x=905, y=1060, width=200, height=130, scale=0.5)
+        todas_sprites = pygame.sprite.Group()
+        personagem1 = Personagem(100, personagem1_sprites)
+        personagem2 = Personagem(1100, personagem2_sprites)
+        personagem2.direcao = -1
+        todas_sprites.add(personagem1)
+        todas_sprites.add(personagem2)
+
+        
+        rodando = True
+        vencedor = False
+        velocidade = 4
+        correndo_p1 = False       
+        correndo_p2 = False        
+
+        inicio_partida = datetime.now()
+        inicio_luta = pygame.time.get_ticks() # Define o início do tempo de luta quando as animações são carregadas
+        tempo_luta = 120 # Define o tempo de luta em segundos
+        tempo_pausado = 0
+        fonte_time = pygame.font.Font("assets/fontes/PressStart2P-Regular.ttf", 16) # Define o estilo da fonte do cronômetro
+        mensagem_fim = ""
+        voltar_menu = False
+
+        # Loop principal: processa entrada, atualiza estado e renderiza a cena.
+        while rodando:
+
+            tempo_atual = pygame.time.get_ticks() # Define o tempo atual o mesmo do início da luta
+            tempo_restante = tempo_luta - ((tempo_atual - inicio_luta - tempo_pausado) / 1000) # Defino o tempo_restante como o tempo de luta menos o tempo percorrido
+            tempo_restante = max(0, tempo_restante) # Define o máximo do tempo restante (que só vai até 0)
+
+            """ Trecho de código que formata o tempo para minutos e segundos """
+            segundos = int(tempo_restante)
+            minutos = segundos // 60
+            segundos = segundos % 60
+            tempo_formatado = f"{minutos:02}:{segundos:02}"
+
+            """ Condição que define que se o tempo restante for menor ou igual a 0, o loop principal se encerra """
+            if tempo_restante <= 0:
+                if personagem1.vida > personagem2.vida:
+                    mensagem_fim = "Jogador 1"
+                elif personagem2.vida > personagem1.vida:
+                    mensagem_fim = "Jogador 2"
+                else:
+                    mensagem_fim = "Empate!"
+                rodando = False
+                
+            verificar_ataque(personagem1, personagem2, 1, sons_ataques, som_defesa) 
+            verificar_ataque(personagem2, personagem1, 2, sons_socos, som_defesa)
+            verificar_chute(personagem1, personagem2, 1, sons_chute, som_defesa)
+            verificar_chute(personagem2, personagem1, 2, sons_chute, som_defesa)
+            verificar_especial(personagem1, personagem2, 1, sons_especial, som_defesa)
+            verificar_especial(personagem2, personagem1, 2, sons_especial, som_defesa)
+
+            for evento in pygame.event.get():
+                if evento.type == pygame.QUIT:
+                    pygame.mixer.music.stop()
+                    pygame.quit()
+                    return
+
+                # Ataques dos personagens
+                if evento.type == pygame.KEYDOWN:
+                    if evento.key == pygame.K_ESCAPE:
+                        tempo_antes_pause = pygame.time.get_ticks()
+                        resultado = tela_pause(tela)
+                        if resultado == "exit":
+                            pygame.quit()
+                            return
+                        if resultado == "menu":
+                            pygame.mixer.music.stop()
+                            voltar_menu = True
+                            rodando = False
+                            mensagem_fim = ""
+                            break
+                        if resultado == "continuar":
+                            tempo_pausado += pygame.time.get_ticks() - tempo_antes_pause
+                    
+                    if evento.key == pygame.K_w:
+                        personagem1.atacar()
+                        
+
+                    if evento.key == pygame.K_s:
+                        personagem1.chutar()
+                        
+                    if evento.key == pygame.K_e:
+                        personagem1.atacar_especial()
+
+                    if evento.key == pygame.K_UP:
+                        personagem2.atacar()
+                        
+                    if evento.key == pygame.K_DOWN:
+                        personagem2.chutar()
+                        
+
+                    if evento.key == pygame.K_RETURN:
+                        personagem2.atacar_especial()               
+
+            teclas = pygame.key.get_pressed()
+            personagem1.estado = "idle"
+            personagem2.estado = "idle"
+            # Movimentação alterando direto o eixo X do retângulo do jogador
+            if teclas[pygame.K_LSHIFT]:      
+                personagem1.defendendo = True
+            else:
+                personagem1.defendendo = False
+            if teclas[pygame.K_RSHIFT]:
+                personagem2.defendendo = True
+            else:
+                personagem2.defendendo = False
+            if teclas[pygame.K_LEFT]:
+                personagem2.rect.x -= velocidade
+                personagem2.estado = "run"
+                personagem2.direcao = -1
+            if teclas[pygame.K_RIGHT]:
+                personagem2.rect.x += velocidade
+                personagem2.estado = "run"
+                personagem2.direcao = 1
+            if teclas[pygame.K_a]:
+                personagem1.rect.x -= velocidade
+                personagem1.estado = "run"
+                personagem1.direcao = -1
+            if teclas[pygame.K_d]:
+                personagem1.rect.x += velocidade
+                personagem1.estado = "run"
+                personagem1.direcao = 1
+
+            
+            p1_correndo_agora = personagem1.estado == "run"
+            p2_correndo_agora = personagem2.estado == "run"
+
+            if (p1_correndo_agora or p2_correndo_agora) and not (correndo_p1 or correndo_p2):
+                som_corrida.play(loops=-1)
+
+            if not p1_correndo_agora and not p2_correndo_agora and (correndo_p1 or correndo_p2):
+                som_corrida.stop()
+            
+            correndo_p1 = p1_correndo_agora
+            correndo_p2 = p2_correndo_agora
     
-    # 2. Criando a estrutura de Sprites usando Dicionários
-    jogador = {
-        "imagem": player_image,
-        "rect": player_image.get_rect(topleft=(100, 100))
-    }
 
-    gema = {
-        "imagem": gem_image,
-        "rect": gem_image.get_rect(topleft=(500, 300))
-    }
-    
-    inimigo = {
-        "imagem": bat_image,
-        "rect": bat_image.get_rect(topleft=(200, 500))
-    }
+            # Limitando o jogador dentro das bordas da tela usando as propriedades do Rect
+            personagem1.rect.x = limitar_valor(personagem1.rect.x, 0, LARGURA_TELA - personagem1.rect.width)
+            personagem2.rect.x = limitar_valor(personagem2.rect.x, 0, LARGURA_TELA - personagem2.rect.width)
 
-    velocidade = 5
-    pontos = 0
-    vidas = 3
-    recorde = carregar_recorde(CAMINHO_RECORDE)
-
-    # Loop principal: processa entrada, atualiza estado e renderiza a cena.
-    while rodando:
-        relogio.tick(FPS)
-
-        for evento in pygame.event.get():
-            if evento.type == pygame.QUIT:
+            # Se alguum dos personagens atingir 0 de pontos de vida, o jogo acaba
+            if personagem1.vida <= 0:
+                mensagem_fim = "Jogador 2"
+                vencedor = True
                 rodando = False
 
-        teclas = pygame.key.get_pressed()
+            elif personagem2.vida <= 0:
+                mensagem_fim = "Jogador 1"
+                vencedor = True
+                rodando = False
 
-        # Movimentação alterando direto os eixos X e Y do retângulo do jogador
-        if teclas[pygame.K_LEFT]:
-            jogador["rect"].x -= velocidade
-        if teclas[pygame.K_RIGHT]:
-            jogador["rect"].x += velocidade
-        if teclas[pygame.K_UP]:
-            jogador["rect"].y -= velocidade
-        if teclas[pygame.K_DOWN]:
-            jogador["rect"].y += velocidade
+            tela.blit(cenario, (0, 0))
+            tela.blit(moldura_tempo, rect_moldura_tempo)
+            tela.blit(moldura_vida, (170,40))
+            tela.blit(moldura_ultimate, (170,80))
+            tela.blit(moldura_vida2, (985,40))
+            tela.blit(moldura_ultimate2, (985,80))
+            # Jogador 1
+            tela.blit(avatar1, (80, 20))
+            # Jogador 2
+            tela.blit(avatar2, (1235, 20))
 
-        # Limitando o jogador dentro das bordas da tela usando as propriedades do Rect
-        jogador["rect"].x = limitar_valor(jogador["rect"].x, 0, LARGURA_TELA - jogador["rect"].width)
-        jogador["rect"].y = limitar_valor(jogador["rect"].y, 0, ALTURA_TELA - jogador["rect"].height)
+            # Desenha a barra de vida e de ultimate e vai atualizando enquanto o jogo roda
+            desenhar_barra_vida(tela, 218, 48, personagem1.vida, personagem1.vida_maxima)
+            desenhar_barra_ultimate(tela, 217, 88, personagem1.ultimate, personagem1.ultimate_maximo)
 
-        # Verificação de colisão com a Gema (antigo 'item')
-        if verificar_colisao(jogador["rect"], gema["rect"]):
-            pontos = calcular_pontos(pontos, 10)
+            desenhar_barra_vida(tela, 1010, 48, personagem2.vida, personagem2.vida_maxima)
+            desenhar_barra_ultimate(tela, 1009, 88, personagem2.ultimate, personagem2.ultimate_maximo)
 
-            # Move a gema de lugar ao coletar
-            gema["rect"].x += 80
-            gema["rect"].y += 50
+            """ Renderiza o tempo formatado na tela """
+            if tempo_restante > 10:
+                texto = fonte_time.render(
+                    tempo_formatado,
+                    True,
+                    (255, 255, 255)
+                )
+            else:
+                texto = fonte_time.render(
+                    tempo_formatado,
+                    True,
+                    (255, 0, 0) # Define que a partir dos 10 segundos finais, a cor do tempo é alterada para vermelho
+                )
 
-            # Se a gema sair da tela, volta para uma posição segura
-            if gema["rect"].x > LARGURA_TELA - gema["rect"].width:
-                gema["rect"].x = 50
-            if gema["rect"].y > ALTURA_TELA - gema["rect"].height:
-                gema["rect"].y = 50
+            """ Coloca o tempo na tela do jogo """
+            texto_rect = texto.get_rect(center=(LARGURA_TELA // 2, 57))
+            tela.blit(texto, texto_rect)
 
-        # Verificação de colisão com o Inimigo
-        if verificar_colisao(jogador["rect"], inimigo["rect"]):
-            vidas = tomar_dano(vidas, 1)
+            todas_sprites.update()
+            for sprite in todas_sprites:
+                sprite.draw(tela)
 
-            # Afasta o inimigo ao colidir
-            inimigo["rect"].x += 80
-            inimigo["rect"].y += 50
+            pygame.display.flip()
+            relogio.tick(FPS)
+        if voltar_menu:
+            continue
+        pygame.mixer.music.stop()
+        resultado = tela_fim(tela, mensagem_fim)
+        if resultado == "exit":
+            pygame.quit()
+            return
 
-            if inimigo["rect"].x > LARGURA_TELA - inimigo["rect"].width:
-                inimigo["rect"].x = 50
-            if inimigo["rect"].y > ALTURA_TELA - inimigo["rect"].height:
-                inimigo["rect"].y = 50
+        if personagem1.vida <= 0:
+            campeao = "Jogador 2"
+        elif personagem2.vida <= 0:
+            campeao = "Jogador 1"
+        elif personagem1.vida > personagem2.vida:
+            campeao = "Jogador 1"
+        elif personagem2.vida > personagem1.vida:
+            campeao = "Jogador 2"
+        else:
+            campeao = "Empate"
 
-        # Regras de fim de jogo e recorde
-        if jogador_perdeu(vidas):
-            rodando = False
+        fim_partida = datetime.now()
+        duracao = fim_partida - inicio_partida
+        segundos = int(duracao.total_seconds())
+        minutos = segundos // 60
+        segundos = segundos % 60
 
-        if pontos > recorde:
-            recorde = pontos
-            salvar_recorde(CAMINHO_RECORDE, recorde)
-
-        pygame.display.set_caption(
-            f"{TITULO_JOGO} | Pontos: {pontos} | Recorde: {recorde} | Vidas: {vidas}"
+        nova_partida = (
+            f"{fim_partida.strftime('%d/%m/%Y %H:%M:%S')} | " 
+            f"Campeão: {campeao} | " 
+            f"{minutos:02}:{segundos:02}\n"
         )
 
-        tela.fill(CINZA)
-
-        # Desenhando os elementos na tela passando a imagem e o rect de cada dicionário
-        tela.blit(gema["imagem"], gema["rect"])
-        tela.blit(inimigo["imagem"], inimigo["rect"])
-        tela.blit(jogador["imagem"], jogador["rect"])
-
-        pygame.display.flip()
-
-    pygame.quit()
+        atualizar_historico(nova_partida)
