@@ -6,8 +6,11 @@ def carregar_historico():
     try:
         with open(CAMINHO_ARQ_HISTORICO, "r", encoding="utf-8") as arquivo:
             for linha in arquivo:
+                linha = linha.strip()
+                if not linha:
+                    continue
                 if contador < 5:
-                    partidas.append(linha.strip())
+                    partidas.append(linha)
                     contador += 1
                 else:
                     break

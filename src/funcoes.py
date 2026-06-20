@@ -128,6 +128,9 @@ def verificar_especial(atacante, defensor, personagem, sons = None, som_defesa =
 def desenhar_historico(tela, partidas, fonte):
     y = 255
     for partida in partidas:
+        if not partida.strip():
+            continue
+        print(f"LINHA: {repr(partida)}")
         campeao, data, duracao = partida.split("|")
         tela.blit(fonte.render(campeao, True, (255, 255, 255)),(300, y))
         tela.blit(fonte.render(data, True, (255, 255, 255)),(600, y))
