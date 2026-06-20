@@ -13,7 +13,9 @@ CAMINHO_FUNDO_INICIAL = "assets/imagens/tela/fundo_inicial.png"
 CAMINHO_FUNDO_HISTORICO = "assets/imagens/tela/fundo_historico.png"
 CAMINHO_FUNDO_FIM = "assets/imagens/tela/fundo_fim.png"
 CAMINHO_LOGO = "assets/imagens/tela/logo.png"
-CAMINO_START = "assets/imagens/tela/btn_start.png"
+CAMINHO_TITULO_PAUSE = "assets/imagens/tela/titulo_pause.png"
+CAMINHO_START = "assets/imagens/tela/btn_start.png"
+CAMINHO_RESUME = "assets/imagens/tela/btn_resume.png"
 CAMINHO_EXIT = "assets/imagens/tela/btn_exit.png"
 CAMINHO_BACK = "assets/imagens/tela/btn_voltar.png"
 CAMINHO_BTN_HISTORICO = "assets/imagens/tela/btn_historico.png"
@@ -28,6 +30,8 @@ CAMINHO_RUN_1 = "assets/imagens/sprites/sprite_run.bmp"
 CAMINHO_RUN_2 = "assets/imagens/sprites/sprite_run2.bmp"
 CAMINHO_ESPECIAL_1 = "assets/imagens/sprites/sprite_especial.bmp"
 CAMINHO_ESPECIAL_2 = "assets/imagens/sprites/sprite_especial2.bmp"
+CAMINHO_DEFESA_1 = "assets/imagens/sprites/sprite_defesa.bmp"
+CAMINHO_DEFESA_2 = "assets/imagens/sprites/sprite_defesa2.bmp"
 
 FRAMES_IDLE_1 = [
     (100, 66, 447, 636),
@@ -35,8 +39,8 @@ FRAMES_IDLE_1 = [
 ]
 
 FRAMES_IDLE_2 = [
-    (66,  149, 636, 697),   # Frame 1 — postura ereta
-    (849,  88, 626, 758),   # Frame 2 — postura abaixada (respiração)
+    (66,  149, 636, 697),
+    (849,  88, 626, 758)
 ]
 
 FRAMES_ATTACK_1 = [
@@ -49,10 +53,10 @@ FRAMES_ATTACK_1 = [
 ]
 
 FRAMES_ATTACK_2 = [
-    (48,   66, 396, 385),   # Frame 1 — postura inicial
-    (573,  68, 475, 383),   # Frame 2 — recuo / preparação
-    (1176, 80, 390, 370),   # Frame 3 — impacto
-    (1679, 64, 390, 387),   # Frame 4 — retorno à guarda
+    (48,   66, 396, 385),
+    (573,  68, 475, 383),
+    (1176, 80, 390, 370),
+    (1679, 64, 390, 387)
 ]
 
 FRAMES_CHUTE_1 = [
@@ -66,10 +70,10 @@ FRAMES_CHUTE_1 = [
 ]
 
 FRAMES_CHUTE_2 = [
-    (47,   65, 404, 391),   # Frame 1 — postura inicial
-    (562,  54, 472, 411),   # Frame 2 — joelho levantado / preparação
-    (1207, 45, 357, 412),   # Frame 3 — impacto do chute
-    (1696, 65, 401, 388),   # Frame 4 — retorno à guarda
+    (47,   65, 404, 391),
+    (562,  54, 472, 411),
+    (1207, 45, 357, 412),
+    (1696, 65, 401, 388)
 ]
 
 FRAMES_RUN_1 = [
@@ -90,15 +94,24 @@ FRAMES_RUN_2 = [
 ]
 
 FRAMES_ESPECIAL_1 = [
-    (119,  136, 263, 354),   # Frame 1 — postura inicial
-    (666,   46, 310, 442),   # Frame 2 — carga / expansão
-    (1204, 106, 307, 387),   # Frame 3 — liberação do especial
-    (1518, 106, 277, 349),   # Frame 4 — retorno à guarda
+    (119,  136, 263, 354),
+    (666,   46, 325, 442),
+    (1204, 106, 591, 387)
 ]
 
 FRAMES_ESPECIAL_2 = [
-    (70,   85, 362, 379),   # Frame 1 — postura inicial
-    (558,  68, 456, 396),   # Frame 2 — carga / recuo
-    (1171, 19, 400, 452),   # Frame 3 — liberação do especial
-    (1683, 20, 382, 455),   # Frame 4 — retorno à guarda
+    (45,   85, 420, 379),
+    (555,  68, 472, 396),
+    (1153, 12, 422, 452),
+    (1659, 12, 429, 455)
+]
+
+FRAMES_DEFESA_1 = [
+    (58,  70, 284, 416),
+    (544, 34, 256, 454)
+]
+
+FRAMES_DEFESA_2 = [
+    (97,  72, 639, 667),
+    (834, 80, 599, 659)
 ]

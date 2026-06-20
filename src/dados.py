@@ -25,4 +25,4 @@ def atualizar_historico(nova_partida):
 
     with open(CAMINHO_ARQ_HISTORICO, "w", encoding="utf-8") as arquivo:
         arquivo.write(nova_partida)
-        arquivo.write(conteudo_antigo)
+        arquivo.write(conteudo_antigo)  
