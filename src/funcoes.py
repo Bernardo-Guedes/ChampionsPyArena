@@ -90,7 +90,8 @@ def verificar_chute(atacante, defensor, personagem, sons =None, som_defesa = Non
                 random.choice(sons).play()
         elif som_defesa:
             som_defesa.play()
-        atacante.acertou_ataque = True
+        atacante.acertou_chute = True
+        
 
 def verificar_especial(atacante, defensor, personagem, sons = None, som_defesa = None):
     if not atacante.usando_ultimate:

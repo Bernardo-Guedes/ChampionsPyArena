@@ -39,9 +39,18 @@ FRAMES_IDLE_1 = [
 ]
 
 FRAMES_IDLE_2 = [
+
     (66,  149, 636, 697),
     (849,  88, 626, 758)
 ]
+
+[
+    (66,  149, 636, 697),   # Frame 1 — postura ereta
+    (849,  88, 626, 758),   # Frame 2 — postura abaixada (respiração)
+]
+
+
+
 
 FRAMES_ATTACK_1 = [
     (2,    6, 361, 391),

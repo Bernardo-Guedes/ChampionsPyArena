@@ -11,6 +11,7 @@ tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
 def executar_jogo():
     """Executa o loop principal do jogo e controla estado, colisões e pontuação."""
     pygame.init()
+
     pygame.display.set_caption(TITULO_JOGO)
 
     cenario = pygame.image.load(CAMINHO_CENARIO).convert()
@@ -62,6 +63,12 @@ def executar_jogo():
     sons_socos = [som_soco1, som_soco2]
     sons_chute = [som_chute]
     sons_especial = [som_especial1, som_especial2]
+
+
+
+
+    cenario = pygame.image.load(CAMINHO_CENARIO).convert()
+    cenario = pygame.transform.scale(cenario, (1400, 600))
 
 
     relogio = pygame.time.Clock()
