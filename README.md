@@ -61,7 +61,8 @@
 
 ```bash
 git clone https://github.com/Bernardo-Guedes/ChampionsPyArena
-cd ChampionsPyArena
+cd ChampionsPyArena-main(1)
+cd ChampionsPyArena-main
 pip install -r requirements.txt
 python main.py
 ```
