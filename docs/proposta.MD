@@ -197,8 +197,8 @@ Liste funcionalidades extras que o grupo poderá implementar se conseguir conclu
 
 Melhorias possíveis (em ordem de prioridade):
 
-- Melhoria 1: Efeitos sonoros e trilha sonora;
-- Melhoria 2: Movimentação extra: Defesa/bloqueio;
+- Melhoria 1: Efeitos sonoros e trilha sonora - CONCLUIDO;
+- Melhoria 2: Movimentação extra: Defesa/bloqueio - CONCLUIDO;
 - Melhoria 3: Movimentação extra: Pular e agachar;
 - Melhoria 4: Movimentação extra: Combos de golpes;
 - Melhoria 5: Menu de seleção de personagem;

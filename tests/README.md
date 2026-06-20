@@ -4,8 +4,12 @@ Esta pasta contem testes automatizados do projeto.
 
 ## Arquivos
 
-- `test_logica.py`: valida funcoes puras de logica em `src/funcoes.py`.
-- 
+- `test_logica.py`: Testes de ataque e chute: início da ação, acerto, erro e bloqueio.
+- `test_dano.py`: Testes de recebimento de dano e bloqueio de dano.
+- `test_vida_negativa.py`: Garante que a vida do personagem não fica negativa.
+- `test_ultimate.py`: Testes do ultimate: limite máximo, acerto, erro e bloqueio.
+- `test_colisao.py`: Verifica colisão verdadeira entre dois objetos.
+- `test_colisao_false.py`: Verifica colisão falsa entre objetos distantes.
 
 ## Como executar
 
@@ -13,7 +17,4 @@ Esta pasta contem testes automatizados do projeto.
 python -m pytest
 ```
 
-## Boas praticas
 
-- Crie testes para toda regra de pontuacao, vidas e condicoes de fim de jogo.
-- Prefira funcoes pequenas e testaveis no modulo `src/funcoes.py`.

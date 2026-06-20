@@ -1,9 +1,10 @@
 # Fontes
 
-Armazene aqui as fontes utilizadas no jogo (ex.: `.ttf`, `.otf`).
+Esta pasta contém as fontes utilizadas no jogo.
 
-## Recomendações
 
-- Use no maximo 1 a 2 fontes para manter consistencia visual.
-- Verifique licenca de uso antes de adicionar fontes externas.
-- Nomeie os arquivos de forma clara (ex.: `fonte_titulo.ttf`).
+## Fonte utilizada
+
+- Press Start 2P (The Press Start 2P Project Authors)  
+  Licença: SIL Open Font License (OFL 1.1)  
+  Origem: https://fonts.google.com/specimen/Press+Start+2P

@@ -35,6 +35,7 @@
 - Regra 4: Cada golpe aplicado no adversário aumenta o preenchimento da barra do Ultimate.
 - Regra 5: Ao atingir 20 pontos de vida, o jogador libera automaticamente o Ultimate - Ainda não implementado
 - Regra 6: O jogador vence e o combate termina se o adversário chegar a 0 pontos de vida.
+- Regra 7: A partida dura no máximo 2 minutos. Ao finalizar vence o jogador com mais vida ou é declarado empate.
 
 
 ## Controles
@@ -44,12 +45,14 @@
 - Tecla W: soco (jogador 1)
 - Tecla S: chute (jogador 1)
 - Tecla E: Ultimate (jogador 1)
+- Shift esquerdo: Defesa (jogador 1)
 - Seta para esquerda: mover para esquerda (jogador 2)
 - Seta para direita: mover para direita (jogador 2)
 - Seta para cima: soco (jogador 2)
 - Seta para baixo: chute (jogador 2)
 - Enter: Ultimate (jogador 2)
-- ESC: Menu de Pause - Ainda não implementado
+- Shift direito: Defesa (jogador 2)
+- ESC: Menu de Pause
 
 
 ## Como executar o projeto
@@ -69,15 +72,27 @@ python main.py
 python -m pytest
 ```
 
-## Checklist mínimo para entrega
 
-- Preencher este README com nome final, descrição real, regras e controles do jogo.
-- Atualizar `docs/proposta.MD` com a proposta do grupo.
-- Garantir que o jogo executa com `python main.py`.
-- Garantir que os testes passam com `pytest`.
+## Recursos utilizados
 
-## Observações para os alunos
+### Sprites e imagens (personagens e elementos visuais)
+As sprites do jogo foram geradas com auxílio de inteligência artificial (ChatGPT) e posteriormente adaptadas e implementadas manualmente no projeto.
 
-- Mantenham o código organizado em módulos pequenos e com responsabilidade clara.
-- Comentem partes importantes da lógica, principalmente regras do jogo.
-- Registrem decisões técnicas no README do grupo ao longo do desenvolvimento.
+### Sons e músicas
+
+Os efeitos sonoros e trilhas utilizadas no jogo foram obtidos das seguintes fontes:
+
+- Sons gerados por IA (ElevenLabs):  
+  https://elevenlabs.io/app/home
+
+- Efeitos sonoros gratuitos:  
+  https://pixabay.com/pt/
+
+- Trilhas sonoras e músicas gratuitas:  
+  https://hzsmith.itch.io/free-medieval-epic-loops
+
+### Fonte tipográfica
+
+A fonte externa utilizada no projeto foi obtida através do Google Fonts:
+
+- https://fonts.google.com/specimen/Press+Start+2P

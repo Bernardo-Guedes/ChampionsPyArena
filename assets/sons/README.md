@@ -1,9 +1,16 @@
 # Sons
 
-Pasta para efeitos sonoros e trilhas do jogo.
+Pasta destinada a efeitos sonoros e trilhas sonoras utilizadas no jogo.
 
-## Recomendações
 
-- Use formatos leves, como `.ogg` para musica e `.wav` para efeitos curtos.
-- Normalize volume para evitar diferencas bruscas entre arquivos.
-- Documente a origem dos audios quando forem externos.
+## Conteúdo atual
+
+- Efeitos sonoros de ataques, chutes, defesa, corrida e habilidades especiais.
+- Trilhas sonoras utilizadas nos menus e durante o jogo.
+
+
+## Origem dos recursos
+
+- Sons e músicas gerados por IA: ElevenLabs (https://elevenlabs.io/app/home)
+- Efeitos sonoros gratuitos: Pixabay (https://pixabay.com/pt/)
+- Trilhas sonoras gratuitas: https://hzsmith.itch.io/free-medieval-epic-loops

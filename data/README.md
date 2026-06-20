@@ -1,12 +1,7 @@
 # Dados
 
-Esta pasta guarda arquivos de persistencia simples em texto.
+Esta pasta contém arquivos de persistência utilizados pelo jogo para armazenar informações simples em texto.
 
 ## Arquivos
 
-- `historico.txt`: historico de partidas jogadas.
-- `README.txt`: arquivo legado; manter por compatibilidade se necessario.
-
-## Observacao
-
-Evite versionar dados pessoais reais dos jogadores.
+- `historico.txt`: armazena o histórico de partidas jogadas, incluindo informações como vencedor e duração da partida.
